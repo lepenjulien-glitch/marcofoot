@@ -24,6 +24,10 @@ const faqs = [
     a: 'Oui, hébergement européen (Supabase EU), aucune revente à des tiers. Tu peux supprimer ton compte à tout moment.',
   },
   {
+    q: "Y a-t-il une limite d'utilisation ?",
+    a: "Marco Pro inclut une utilisation non-commerciale et personnelle de Marco. Pour les utilisateurs intensifs, nous nous réservons la possibilité de t'accompagner avec un plan adapté à ton usage. Aucune limite stricte au lancement — on te fera signe si besoin.",
+  },
+  {
     q: 'Et pour le foot à 11 / les séniors ?',
     a: "Marco est pensé pour le football animation (U7-U13). Pour le foot à 11, les séniors et le semi-pro, on a une suite complète qui s'appelle MonStaff (monstaff.app) — avec Marco tactique, prépa physique, mental, vidéo, et toute la gestion d'équipe.",
   },

@@ -29,10 +29,10 @@ export default function PricingSection() {
             <div className="price-tag">Populaire</div>
             <div className="price-name">Marco Pro</div>
             <div className="price-row">
-              <span className="price-num">5,90€</span>
+              <span className="price-num">14,90€</span>
               <span className="price-per">/ mois</span>
             </div>
-            <div className="price-sub">ou 49€/an · économise 22€</div>
+            <div className="price-sub">&nbsp;</div>
             <ul className="price-feat">
               <li>Tout du plan Starter</li>
               <li><strong>Séances illimitées</strong></li>

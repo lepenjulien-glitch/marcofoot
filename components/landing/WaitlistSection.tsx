@@ -43,7 +43,7 @@ export default function WaitlistSection() {
         <div className="s-badge">// Accès anticipé</div>
         <h2 className="s-title">Rejoins les <span className="or">premiers</span> éducateurs.</h2>
         <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.55)', marginBottom: '32px', lineHeight: '1.75' }}>
-          Marco arrive en mai 2026. Les 500 premiers éducateurs inscrits bénéficient de <strong style={{ color: 'var(--accent)', fontWeight: 600 }}>-50% à vie</strong> sur Marco Pro, et participent à la phase beta privée.
+          Marco arrive en mai 2026. Les 100 premiers éducateurs inscrits bénéficient de <strong style={{ color: 'var(--accent)', fontWeight: 600 }}>-25% pendant 1 an</strong> sur Marco Pro, et participent à la phase beta privée.
         </p>
         <form className="wait-form" onSubmit={handleSubmit}>
           <input
@@ -69,7 +69,7 @@ export default function WaitlistSection() {
         {status === 'error' && (
           <div style={{ marginTop: '20px', color: '#ff6b6b', fontSize: '14px' }}>{message}</div>
         )}
-        <div className="wait-offer">// <strong>-50% à vie</strong> pour les 500 premiers · sans engagement</div>
+        <div className="wait-offer">// <strong>-25% pendant 1 an</strong> pour les 100 premiers · sans engagement</div>
       </div>
     </section>
   );
