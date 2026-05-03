@@ -24,8 +24,8 @@ const faqs = [
     a: 'Oui, hébergement européen (Supabase EU), aucune revente à des tiers. Tu peux supprimer ton compte à tout moment.',
   },
   {
-    q: "Y a-t-il une limite d'utilisation ?",
-    a: "Marco Pro inclut une utilisation non-commerciale et personnelle de Marco. Pour les utilisateurs intensifs, nous nous réservons la possibilité de t'accompagner avec un plan adapté à ton usage. Aucune limite stricte au lancement — on te fera signe si besoin.",
+    q: "Y a-t-il des limites d'utilisation ?",
+    a: "Oui, et c'est volontaire. Chaque plan a un quota mensuel clair (séances + animations tactiques) pour qu'on puisse te garantir un service stable et un prix juste. Marco Pro couvre largement les besoins d'un éducateur régulier (30 séances, 5 animations). Si tu utilises plus, Marco Pro+ est fait pour toi.",
   },
   {
     q: 'Et pour le foot à 11 / les séniors ?',
