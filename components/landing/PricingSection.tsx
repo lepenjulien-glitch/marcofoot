@@ -9,15 +9,24 @@ export default function PricingSection() {
           max-width: 1120px;
           margin: 0 auto;
         }
-        .price-grid-3 .price-row {
-          gap: 12px;
-        }
         @media (max-width: 1024px) {
           .price-grid-3 {
             grid-template-columns: 1fr;
             max-width: 520px;
             padding: 0 24px;
             gap: 24px;
+          }
+        }
+        @media (max-width: 768px) {
+          .price-grid-3 .price-num {
+            font-size: clamp(36px, 11vw, 50px) !important;
+          }
+          .price-grid-3 .price-row {
+            flex-wrap: wrap;
+            gap: 4px 12px !important;
+          }
+          .price-grid-3 .price-per {
+            font-size: 14px !important;
           }
         }
       `}</style>
