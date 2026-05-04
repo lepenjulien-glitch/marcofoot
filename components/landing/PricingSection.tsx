@@ -14,7 +14,17 @@ export default function PricingSection() {
             grid-template-columns: 1fr;
             max-width: 520px;
             padding: 0 24px;
-            gap: 24px;
+            gap: 32px;
+          }
+          .price-grid-3 .price-card {
+            transform: none !important;
+            opacity: 1 !important;
+            position: static !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+          }
+          .price-grid-3 .price-card.feat {
+            overflow: visible !important;
           }
         }
         @media (max-width: 768px) {
