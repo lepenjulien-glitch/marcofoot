@@ -195,9 +195,9 @@ export default function CineHero() {
             <span className="cine-sep"></span>
             <span className="cine-tag">Beta · Mai 2026</span>
           </div>
-          <h1 className="cine-title">
-            L&apos;assistant<br/>
-            des <span className="cine-out">éducateurs</span><br/>
+          <h1 className="cine-title" style={{ fontSize: 'clamp(38px, 10vw, 96px)' }}>
+            L&apos;assistant des<br/>
+            <span className="cine-out">éducateurs</span><br/>
             U7 — <span className="cine-or">U13</span>.
           </h1>
           <p className="cine-sub">Le premier assistant IA pensé pour le football animation. Marco te génère séances, schémas tactiques et conseils pédagogiques — adaptés à l&apos;âge, en moins de 10 secondes.</p>
