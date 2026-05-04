@@ -4,7 +4,7 @@ export default function PricingSection() {
       <div className="s-in">
         <div className="s-hd rv">
           <div className="s-badge">// Tarifs</div>
-          <h2 className="s-title">Gratuit pour commencer.<br/><span className="or">Pro</span> quand tu veux.</h2>
+          <h2 className="s-title" style={{ fontSize: 'clamp(32px, 5.5vw, 78px)', lineHeight: 1.05 }}>Gratuit pour commencer.<br/><span className="or">Pro</span> quand tu veux.</h2>
         </div>
 
         <div className="price-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', maxWidth: '1120px' }}>
