@@ -17,10 +17,17 @@ export default function Nav() {
       navRef.current?.classList.toggle('scrolled', y > 40);
 
       const waitSection = document.getElementById('waitlist');
+      const pricingSection = document.getElementById('pricing');
       if (fbRef.current && waitSection) {
         const waitTop = waitSection.getBoundingClientRect().top;
         const vh = window.innerHeight;
-        const show = y > 600 && waitTop > vh * 0.5;
+        // Hide in pricing section
+        let inPricing = false;
+        if (pricingSection) {
+          const pr = pricingSection.getBoundingClientRect();
+          inPricing = pr.top < vh * 0.8 && pr.bottom > vh * 0.2;
+        }
+        const show = y > 600 && waitTop > vh * 0.5 && !inPricing;
         fbRef.current.classList.toggle('show', show);
       }
     };
