@@ -9,6 +9,9 @@ export default function PricingSection() {
           max-width: 1120px;
           margin: 0 auto;
         }
+        .price-grid-3 .price-row {
+          gap: 12px;
+        }
         @media (max-width: 1024px) {
           .price-grid-3 {
             grid-template-columns: 1fr;
