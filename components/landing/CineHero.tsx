@@ -83,6 +83,25 @@ export default function CineHero() {
   }, []);
 
   return (
+    <>
+    <style>{`
+      @media (max-width: 768px) {
+        .cine-tablet {
+          width: calc(100% - 32px) !important;
+          max-width: 100% !important;
+          margin: 0 auto !important;
+        }
+        .cine-text {
+          margin-bottom: 40px !important;
+        }
+        .cine-bubble {
+          font-size: 14px !important;
+        }
+        .cine-pitch-wrap {
+          aspect-ratio: 16 / 10;
+        }
+      }
+    `}</style>
     <div className="cine-hero" id="cine-hero" ref={heroRef}>
       <div className="cine-stage">
         <div className="cine-bg"></div>
@@ -218,5 +237,6 @@ export default function CineHero() {
         </div>
       </div>
     </div>
+    </>
   );
 }
