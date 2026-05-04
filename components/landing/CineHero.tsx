@@ -1,6 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+
+const MSG_USER = 'Une séance U9 sur la conduite de balle ?';
+const MSG_MARCO = "Je te prépare ça. 3 ateliers progressifs adaptés à l'âge, format 5v5.";
 
 export default function CineHero() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -10,6 +13,44 @@ export default function CineHero() {
   const phaseRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Typewriter state (mobile only)
+  const [userText, setUserText] = useState('');
+  const [marcoText, setMarcoText] = useState('');
+  const [showCursor, setShowCursor] = useState(false);
+  const [typing, setTyping] = useState<'idle' | 'user' | 'pause' | 'marco' | 'done'>('idle');
+  const hasAnimated = useRef(false);
+
+  const startTypewriter = useCallback(() => {
+    if (hasAnimated.current) return;
+    hasAnimated.current = true;
+    setTyping('user');
+    setShowCursor(true);
+
+    let i = 0;
+    const userInterval = setInterval(() => {
+      i++;
+      setUserText(MSG_USER.slice(0, i));
+      if (i >= MSG_USER.length) {
+        clearInterval(userInterval);
+        setTyping('pause');
+        setTimeout(() => {
+          setTyping('marco');
+          let j = 0;
+          const marcoInterval = setInterval(() => {
+            j++;
+            setMarcoText(MSG_MARCO.slice(0, j));
+            if (j >= MSG_MARCO.length) {
+              clearInterval(marcoInterval);
+              setTyping('done');
+              setShowCursor(false);
+            }
+          }, 2000 / MSG_MARCO.length);
+        }, 600);
+      }
+    }, 1500 / MSG_USER.length);
+  }, []);
+
+  // Desktop scrollytelling
   useEffect(() => {
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
     const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
@@ -29,7 +70,6 @@ export default function CineHero() {
       const scrolled = -rect.top;
       const progress = clamp(scrolled / total, 0, 1);
 
-      // Text fade
       const textFadeStart = 0.15;
       const textFadeEnd = 0.30;
       const textHide = clamp((progress - textFadeStart) / (textFadeEnd - textFadeStart), 0, 1);
@@ -37,7 +77,6 @@ export default function CineHero() {
       text.style.transform = `translateY(-50%) translateX(${-60 * textHide}px)`;
       text.style.pointerEvents = textHide < 0.5 ? 'auto' : 'none';
 
-      // Tablet movement
       const stageW = window.innerWidth;
       const tabletW = tablet.offsetWidth;
       const rightOffset = Math.max(80, stageW * 0.08);
@@ -59,17 +98,14 @@ export default function CineHero() {
 
       tablet.style.transform = `translateY(-50%) translateX(${tabletTX}px) scale(${finalScale}) rotateX(${finalRotateX}deg) rotateY(${tabletRotateY}deg)`;
 
-      // Chat fade
       const chatHide = clamp((progress - 0.42) / 0.08, 0, 1);
       chat.style.opacity = String(1 - chatHide);
       chat.style.maxHeight = `${(1 - chatHide) * 200}px`;
       chat.style.padding = `${(1 - chatHide) * 14}px ${(1 - chatHide) * 16}px`;
 
-      // Phase indicator
       const phaseShow = clamp((progress - 0.42) / 0.08, 0, 1);
       phase.style.opacity = String(phaseShow);
 
-      // Scroll indicator
       scroll.style.opacity = String(1 - clamp(progress / 0.10, 0, 1));
     }
 
@@ -81,6 +117,34 @@ export default function CineHero() {
       window.removeEventListener('resize', updateCine);
     };
   }, []);
+
+  // Mobile typewriter trigger via IntersectionObserver
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const isMobile = () => window.innerWidth < 768;
+    if (!isMobile()) return;
+
+    const tablet = tabletRef.current;
+    if (!tablet) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated.current) {
+          startTypewriter();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(tablet);
+    return () => observer.disconnect();
+  }, [startTypewriter]);
+
+  // Determine if we should show typewriter text (mobile) or static text (desktop)
+  const isMobileTypewriter = typing !== 'idle';
+  const userBubbleText = isMobileTypewriter ? userText : MSG_USER;
+  const marcoBubbleText = isMobileTypewriter ? marcoText : MSG_MARCO;
+  const showMarcoBubble = !isMobileTypewriter || typing === 'marco' || typing === 'done';
 
   return (
     <>
@@ -101,6 +165,18 @@ export default function CineHero() {
           aspect-ratio: 16 / 10;
         }
       }
+      .tw-cursor::after {
+        content: '|';
+        display: inline;
+        animation: tw-blink 0.6s step-end infinite;
+        color: var(--accent);
+        font-weight: 400;
+        margin-left: 1px;
+      }
+      @keyframes tw-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
     `}</style>
     <div className="cine-hero" id="cine-hero" ref={heroRef}>
       <div className="cine-stage">
@@ -119,12 +195,18 @@ export default function CineHero() {
             <div className="cine-chat" id="cine-chat" ref={chatRef}>
               <div className="cine-msg cine-msg-user">
                 <div className="cine-av">J</div>
-                <div className="cine-bubble">Une séance U9 sur la conduite de balle ?</div>
+                <div className={`cine-bubble${showCursor && typing === 'user' ? ' tw-cursor' : ''}`}>
+                  {userBubbleText}
+                </div>
               </div>
-              <div className="cine-msg cine-msg-marco">
-                <div className="cine-av cine-av-marco">M</div>
-                <div className="cine-bubble">Je te prépare ça. 3 ateliers progressifs adaptés à l&apos;âge, format 5v5.</div>
-              </div>
+              {showMarcoBubble && (
+                <div className="cine-msg cine-msg-marco">
+                  <div className="cine-av cine-av-marco">M</div>
+                  <div className={`cine-bubble${showCursor && typing === 'marco' ? ' tw-cursor' : ''}`}>
+                    {marcoBubbleText}
+                  </div>
+                </div>
+              )}
             </div>
             <div className="cine-pitch-wrap">
               <svg className="cine-pitch" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
@@ -195,7 +277,7 @@ export default function CineHero() {
                   <circle r="13" fill="white" stroke="#e8b94c" strokeWidth="2.5" opacity="0.5"/>
                 </g>
 
-                {/* Joueur actif avec animation SMIL */}
+                {/* Joueur actif avec animation SMIL — fonctionne desktop ET mobile */}
                 <g>
                   <circle r="14" fill="white" stroke="#e8b94c" strokeWidth="3">
                     <animateMotion dur="6s" repeatCount="indefinite" rotate="0">
